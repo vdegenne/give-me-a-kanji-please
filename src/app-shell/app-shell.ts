@@ -5,7 +5,8 @@ import {customElement} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
 import {store} from '../store.js';
 import styles from './app-shell.css?inline';
-import {jishoOpen} from '@vdegenne/links';
+import {jishoOpen, mdbgOpen} from '@vdegenne/links';
+import {RI} from '../kanjis.js';
 
 declare global {
 	interface Window {
@@ -26,16 +27,19 @@ export class AppShell extends LitElement {
 
 	render() {
 		return html`<!-- -->
+			<div class="absolute top-3 left-3 opacity-20">
+				${store.kanji[RI.JLPT]}
+			</div>
 			<div
 				class="flex items-center justify-center flex-1 text-[12rem]"
 				jp
 				@click="${() => {
-					jishoOpen(store.kanji);
+					mdbgOpen(store.kanji[RI.KANJI]);
 				}}"
 			>
-				${store.kanji}
+				${store.kanji[RI.KANJI]}
 			</div>
-			<div id="actions" class="m-2 flex justify-end opacity-20">
+			<div id="actions" class="m-5 flex justify-end opacity-20">
 				<md-icon-button @click="${() => store.giveMeAKanjiPlease()}">
 					<md-icon>arrow_forward</md-icon>
 				</md-icon-button>
