@@ -1,8 +1,11 @@
+import {withController} from '@snar/lit';
 import {LitElement, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
 import {withStyles} from 'lit-with-styles';
-import styles from './app-shell.css?inline';
+import {customElement} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
+import {store} from '../store.js';
+import styles from './app-shell.css?inline';
+import {jishoOpen} from '@vdegenne/links';
 
 declare global {
 	interface Window {
@@ -15,6 +18,7 @@ declare global {
 
 @customElement('app-shell')
 @withStyles(styles)
+@withController(store)
 export class AppShell extends LitElement {
 	firstUpdated() {
 		materialShellLoadingOff.call(this);
@@ -22,7 +26,20 @@ export class AppShell extends LitElement {
 
 	render() {
 		return html`<!-- -->
-			<span class="font-bold bg-blue-200 text-orange-500"> hello world </span>
+			<div
+				class="flex items-center justify-center flex-1 text-[12rem]"
+				jp
+				@click="${() => {
+					jishoOpen(store.kanji);
+				}}"
+			>
+				${store.kanji}
+			</div>
+			<div id="actions" class="m-2 flex justify-end opacity-20">
+				<md-icon-button @click="${() => store.giveMeAKanjiPlease()}">
+					<md-icon>arrow_forward</md-icon>
+				</md-icon-button>
+			</div>
 			<!-- -->`;
 	}
 }
