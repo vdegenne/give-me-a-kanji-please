@@ -5,8 +5,9 @@ import {customElement} from 'lit/decorators.js';
 import {materialShellLoadingOff} from 'material-shell';
 import {store} from '../store.js';
 import styles from './app-shell.css?inline';
-import {jishoOpen, mdbgOpen} from '@vdegenne/links';
+import {googleImagesUrl, jishoOpen, jishoUrl, mdbgOpen} from '@vdegenne/links';
 import {RI} from '../kanjis.js';
+import {ICO_JISHO, SVG_GOOGLE_IMAGES} from '../assets/assets.js';
 
 declare global {
 	interface Window {
@@ -39,7 +40,20 @@ export class AppShell extends LitElement {
 			>
 				${store.kanji[RI.KANJI]}
 			</div>
-			<div id="actions" class="m-5 flex justify-end opacity-20">
+			<div id="actions" class="m-5 flex opacity-20 gap-3">
+				<md-icon-button
+					href="${googleImagesUrl(store.kanji[RI.KANJI])}"
+					target="_blank"
+				>
+					<md-icon>${SVG_GOOGLE_IMAGES}</md-icon>
+				</md-icon-button>
+				<md-icon-button
+					href="${jishoUrl(store.kanji[RI.KANJI])}"
+					target="_blank"
+				>
+					<md-icon> <img src=${ICO_JISHO} /></md-icon>
+				</md-icon-button>
+				<div class="flex-1"></div>
 				<md-icon-button @click="${() => store.giveMeAKanjiPlease()}">
 					<md-icon>arrow_forward</md-icon>
 				</md-icon-button>
