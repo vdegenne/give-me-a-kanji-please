@@ -12,7 +12,10 @@ document.querySelector<HTMLElement>('material-shell').appendChild(app);
 // import "./firebase/onAuthStateChanged.js";
 
 import './global-listeners.js';
+import {openSettingsDialog} from './imports.js';
 
 // import './gamepad.js';
 
-app.updateComplete.then(() => {});
+app.updateComplete.then(() => {
+	// openSettingsDialog();
+});

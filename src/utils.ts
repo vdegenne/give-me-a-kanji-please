@@ -1,6 +1,8 @@
+import {toast} from 'toastit';
+
 export function copyToClipboard(text: string) {
 	navigator.clipboard.writeText(text);
-	// toastit('Copied to clipboard.')
+	toast('Copied to clipboard.', {timeoutMs: 1000});
 }
 
 export function sleep(milli: number = 1000) {
@@ -61,7 +63,7 @@ export function getElementsTree(node: Element): Promise<Element[]> {
 }
 export async function getElementInTree(
 	from: Element,
-	condition: (element: Element) => boolean
+	condition: (element: Element) => boolean,
 ): Promise<Element | undefined> {
 	for (const element of await getElementsTree(from)) {
 		if (condition(element)) {

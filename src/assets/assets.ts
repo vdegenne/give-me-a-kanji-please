@@ -3,6 +3,7 @@ import {html} from 'lit';
 /** Export individual assets for helping tree-shaking */
 // export {default as MY_IMAGE} from './img/my-image.png?inline';
 export {default as ICO_JISHO} from './img/jisho.ico?inline';
+export {default as ICO_MDBG} from './img/mdbg.ico?inline';
 // etc...
 
 // import successSrc from '/audio/success.mp3';

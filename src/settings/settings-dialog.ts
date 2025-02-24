@@ -7,10 +7,13 @@ import styles from './settings-dialog.css?inline';
 import {withController} from '@snar/lit';
 import {renderThemeElements} from '../styles/theme-elements.js';
 import {themeStore} from '../styles/styles.js';
+import {bindInput} from 'relit';
+import {Mode, store} from '../store.js';
 
 @customElement({name: 'settings-dialog', inject: true})
 @withStyles(styles)
 @withController(themeStore)
+@withController(store)
 class SettingsDialog extends LitElement {
 	@state() open = false;
 
@@ -18,18 +21,40 @@ class SettingsDialog extends LitElement {
 
 	render() {
 		return html`
-			<md-dialog ?open=${this.open} @close=${() => (this.open = false)}>
+			<md-dialog ?open=${this.open} @closed=${() => (this.open = false)}>
 				<header slot="headline">
 					<md-icon>settings</md-icon>
 					Settings
 				</header>
 
 				<form slot="content" method="dialog" id="form">
+					<h3>Font size</h3>
+					<md-slider
+						class="w-full mb-5"
+						min="1"
+						max="60"
+						ticks
+						labeled
+						${bindInput(store, 'fontSize')}
+					></md-slider>
+
+					<md-list-item
+						class="cursor-pointer select-none mb-10"
+						@click=${() => store.toggleMode()}
+					>
+						<div slot="headline">Quiz mode</div>
+						<md-switch
+							inert
+							slot="start"
+							?selected=${store.mode === Mode.QUIZ}
+						></md-switch>
+					</md-list-item>
+
 					${renderThemeElements()}
 				</form>
 
 				<div slot="actions">
-					<md-text-button form="form">Close</md-text-button>
+					<md-text-button form="form" autofocus>Close</md-text-button>
 				</div>
 			</md-dialog>
 		`;
