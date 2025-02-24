@@ -10,6 +10,7 @@ import {Mode, QuizState, store} from '../store.js';
 import styles from './app-shell.css?inline';
 import {openSettingsDialog} from '../imports.js';
 import {copyToClipboard} from '../utils.js';
+import {styleMap} from 'lit/directives/style-map.js';
 
 declare global {
 	interface Window {
@@ -29,6 +30,12 @@ export class AppShell extends LitElement {
 	}
 
 	render() {
+		const style = styleMap({
+			'font-size': `${store.fontSize}rem`,
+			height: '0px',
+			'line-height': '0px',
+			top: '-18px',
+		});
 		return html`<!-- -->
 			<div class="m-2 flex z-10">
 				<div class="ml-1">${store.kanji[RI.JLPT]}</div>
@@ -44,11 +51,9 @@ export class AppShell extends LitElement {
 			>
 				${store.mode === Mode.KANJI || store.quizState === QuizState.ANSWER
 					? html`
-							<span
-								class="relative"
-								style="font-size:${store.fontSize}rem;height:0px;line-height:0px;top:-18px"
-								>${store.kanji[RI.KANJI]}</span
-							>
+							<span class="relative" style="${style}">
+								${store.kanji[RI.KANJI]}
+							</span>
 						`
 					: html`<span>${store.kanji[RI.MEANING]}</span>`}
 			</div>
